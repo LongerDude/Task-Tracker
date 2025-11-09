@@ -1,15 +1,20 @@
 package com.longerdude.taskmanagerandcalculator;
 
+import com.longerdude.taskmanagerandcalculator.TaskManager.Calculator;
 import com.longerdude.taskmanagerandcalculator.TaskManager.Task;
 import com.longerdude.taskmanagerandcalculator.TaskManager.TaskCollection;
 import com.sun.source.tree.Tree;
 import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 
@@ -77,15 +82,44 @@ public class TaskUI extends Application {
         });
 
 
-
         taskManagerLayout.setCenter(treeView);
         layout.setTop(hBox);
         layout.setCenter(taskManagerLayout);
-        tasksButton.setOnAction(event -> {layout.setCenter(taskManagerLayout);});
-        calculationButton.setOnAction(event -> {layout.setCenter(calculatorLayout);});
+        tasksButton.setOnAction(event -> {layout.setCenter(taskManagerLayout);
+        window.sizeToScene();});
+
+        //CALCULATOR
+        Calculator calculator = new Calculator();
+        double value = 0;
+        StringProperty valueString = new SimpleStringProperty(String.valueOf(value));
+        Label currentValue = new Label("0");
+        currentValue.setPrefSize(100,100);
+        currentValue.setFont(new Font("Arial", 24));
+        currentValue.textProperty().bind(valueString);
+        GridPane digitsGridPane = new GridPane();
+        calculator.populateGrid(digitsGridPane);
+
+
+
+
+        calculatorLayout.setTop(currentValue);
+        calculatorLayout.setCenter(digitsGridPane);
+
+
+
+
+
+
+
+
+
+
+        calculationButton.setOnAction(event -> {layout.setCenter(calculatorLayout);
+            window.sizeToScene();});
 
         Scene scene = new Scene(layout);
         window.setScene(scene);
+
         window.show();
         window.setOnCloseRequest(event -> save(taskCollection));
 
