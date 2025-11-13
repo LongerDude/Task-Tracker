@@ -1,11 +1,12 @@
 package com.longerdude.taskmanagerandcalculator.TaskManager;
 
+import javafx.scene.control.TreeItem;
+
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
-import javafx.scene.control.*;
 
 public class TaskCollection {
     private HashMap<LocalDate, ArrayList<Task>> tasks;
