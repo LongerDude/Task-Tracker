@@ -90,21 +90,18 @@ public class TaskUI extends Application {
         window.sizeToScene();});
 
         //CALCULATOR
-        Calculator calculator = new Calculator();
-        double value = 0;
-        StringProperty valueString = new SimpleStringProperty(String.valueOf(value));
-        Label currentValue = new Label("0");
-        currentValue.setPrefSize(100,100);
-        currentValue.setFont(new Font("Arial", 24));
-        currentValue.textProperty().bind(valueString);
-        GridPane digitsGridPane = new GridPane();
-        calculator.populateGrid(digitsGridPane);
+        //double value = 0;
+        Calculator calculator = new Calculator(calculatorLayout);
+        //StringProperty valueString = new SimpleStringProperty(String.valueOf(value));
+        //Label currentValue = new Label("0");
+        //currentValue.setPrefSize(100,100);
+        //currentValue.setFont(new Font("Arial", 24));
+        //currentValue.textProperty().bind(valueString);
+        //GridPane digitsGridPane = new GridPane();
+        //calculator.populateGrid(digitsGridPane);
 
-
-
-
-        calculatorLayout.setTop(currentValue);
-        calculatorLayout.setCenter(digitsGridPane);
+        //calculatorLayout.setTop(currentValue);
+        //calculatorLayout.setCenter(digitsGridPane);
 
 
 

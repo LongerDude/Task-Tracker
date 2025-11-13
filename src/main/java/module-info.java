@@ -5,6 +5,7 @@ module com.longerdude.taskmanagerandcalculator {
     requires org.controlsfx.controls;
     requires jdk.unsupported.desktop;
     requires jdk.compiler;
+    requires javafx.base;
 
     opens com.longerdude.taskmanagerandcalculator to javafx.fxml;
     exports com.longerdude.taskmanagerandcalculator;
