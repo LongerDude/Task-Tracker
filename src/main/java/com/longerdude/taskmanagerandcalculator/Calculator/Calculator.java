@@ -45,8 +45,8 @@ public class Calculator {
         mainLayout.setCenter(digitsGridPane);
     }
 
-    public Button makeButton(int i, String label) {
-        Button button = new Button(label);
+    public Button makeButton(int i) {
+        Button button = new Button(String.valueOf(i));
         button.setPrefSize(100, 100);
         button.setFont(new Font("Arial", 24));
         button.setStyle(
@@ -63,129 +63,106 @@ public class Calculator {
 
     }
 
-    public void populateGrid(GridPane grid) {
-        int x = 0; //row
-        //digits from 1-3
-        for (int i = 1; i < 4; i++) {
-            grid.add(makeButton(i, String.valueOf(i)), i, x);
-        }
-        //Division button
-        Button division = new Button("%");
-        division.setStyle(
+    public void styleButton(Button button) {
+        button.setStyle(
                 "-fx-border-color: grey;" + // Sets the border color
                         "-fx-border-width: 5px;" +   // Sets the border width
                         "-fx-padding: 10px;" +      // Sets padding around the text
                         "-fx-background-color: #f0f0f0;" // Sets the background color
         );
+        button.setFont(new Font("Arial", 24));
+        button.setPrefSize(100, 100);
+    }
+
+    public void populateGrid(GridPane grid) {
+        int x = 0; //row
+        //digits from 1-3
+
+        for (int i = 1; i < 4; i++) {
+            grid.add(makeButton(i), i, x);
+        }
+
+        //Division button
+
+        Button division = new Button("%");
+        styleButton(division);
         division.setOnAction(event -> {
             this.operation = 3;
             previous = value.getValue();
             value.set(0);
         });
-
-        division.setPrefSize(100, 100);
-        division.setFont(new Font("Arial", 24));
         grid.add(division, 4, x);
         x++;
+
         // digits from 4 to 6
+
         for (int i = 1; i < 4; i++) {
-            grid.add(makeButton(i + 3, String.valueOf(i + 3)), i, x);
+            grid.add(makeButton(i + 3), i, x);
         }
+
         //Multiplication
+
         Button multiplication = new Button("x");
-        multiplication.setStyle(
-                "-fx-border-color: grey;" + // Sets the border color
-                        "-fx-border-width: 5px;" +   // Sets the border width
-                        "-fx-padding: 10px;" +      // Sets padding around the text
-                        "-fx-background-color: #f0f0f0;" // Sets the background color
-        );
-        multiplication.setPrefSize(100, 100);
+        styleButton(multiplication);
         multiplication.setOnAction(event -> {
             this.operation = 2;
             previous = value.getValue();
             value.set(0);
 
         });
-        multiplication.setFont(new Font("Arial", 24));
         grid.add(multiplication, 4, x);
         x++;
-        //digits from 7 to 9
-        for (int i = 1; i < 4; i++) {
-            grid.add(makeButton(i + 6, String.valueOf(i + 6)), i, x);
 
+        //digits from 7 to 9
+
+        for (int i = 1; i < 4; i++) {
+            grid.add(makeButton(i + 6), i, x);
         }
+
         //Subtraction
+
         Button subtraction = new Button("-");
-        subtraction.setStyle(
-                "-fx-border-color: grey;" + // Sets the border color
-                        "-fx-border-width: 5px;" +   // Sets the border width
-                        "-fx-padding: 10px;" +      // Sets padding around the text
-                        "-fx-background-color: #f0f0f0;" // Sets the background color
-        );
-        subtraction.setPrefSize(100, 100);
-        subtraction.setFont(new Font("Arial", 24));
+        styleButton(subtraction);
         subtraction.setOnAction(event -> {
             this.operation = 1;
             previous = value.getValue();
             value.set(0);
         });
         grid.add(subtraction, 4, x);
+
         //Zero
+
         Button zero = new Button("0");
-        zero.setStyle(
-                "-fx-border-color: grey;" + // Sets the border color
-                        "-fx-border-width: 5px;" +   // Sets the border width
-                        "-fx-padding: 10px;" +      // Sets padding around the text
-                        "-fx-background-color: #f0f0f0;" // Sets the background color
-        );
-        zero.setPrefSize(100, 100);
-        zero.setFont(new Font("Arial", 24));
+        styleButton(zero);
         zero.setOnAction(event -> {
             value.set(value.getValue() * 10);
         });
         grid.add(zero, 2, x + 1);
+
         //CLEAR
+
         Button clear = new Button("Clr");
-        clear.setStyle(
-                "-fx-border-color: grey;" + // Sets the border color
-                        "-fx-border-width: 5px;" +   // Sets the border width
-                        "-fx-padding: 10px;" +      // Sets padding around the text
-                        "-fx-background-color: #f0f0f0;" // Sets the background color
-        );
-        clear.setPrefSize(100, 100);
-        clear.setFont(new Font("Arial", 24));
+        styleButton(clear);
         clear.setOnAction(event -> {
             value.set(0);
         });
         grid.add(clear, 4, x + 1);
 
-
         // Addition
+
         Button addition = new Button("+");
-        addition.setStyle(
-                "-fx-border-color: grey;" + // Sets the border color
-                        "-fx-border-width: 5px;" +   // Sets the border width
-                        "-fx-padding: 10px;" +      // Sets padding around the text
-                        "-fx-background-color: #f0f0f0;" // Sets the background color
-        );
-        addition.setPrefSize(100, 100);
-        addition.setFont(new Font("Arial", 24));
+        styleButton(addition);
         addition.setOnAction(event -> {
             this.operation = 0;
             previous = value.getValue();
             value.set(0);
         });
         grid.add(addition, 3, x + 1);
+
         //RESULT
+
         Button result = new Button("=");
-        result.setStyle(
-                "-fx-border-color: grey;" + // Sets the border color
-                        "-fx-border-width: 5px;" +   // Sets the border width
-                        "-fx-padding: 10px;" +      // Sets padding around the text
-                        "-fx-background-color: #f0f0f0;" // Sets the background color
-        );
-        result.setPrefSize(100, 100);
-        result.setFont(new Font("Arial", 24));
+        styleButton(result);
         result.setOnAction(event -> {
             if (this.operation == 0) {
                 value.set(value.getValue() + previous);
@@ -199,7 +176,5 @@ public class Calculator {
             }
         });
         grid.add(result, 1, x + 1);
-
-
     }
 }
