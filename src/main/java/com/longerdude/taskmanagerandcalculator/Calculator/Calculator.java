@@ -11,17 +11,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 
 public class Calculator {
-    private DoubleProperty value;
-    private Label currentValue;
+    private final DoubleProperty value;
+    private final Label currentValue;
     private double previous;
     private int operation;
     //0 = addition
     //1 = subtraction
     //2 = multiplication
     //3 = division
-
-
-
 
 
     public Calculator(BorderPane mainLayout) {
@@ -38,7 +35,7 @@ public class Calculator {
                         "-fx-background-color: #8f4949;" // Sets the background color
         );
 
-        currentValue.setPrefSize(400,100);
+        currentValue.setPrefSize(400, 100);
         currentValue.setFont(new Font("Arial", 24));
         currentValue.textProperty().bind(valueString);
 
@@ -48,8 +45,8 @@ public class Calculator {
         mainLayout.setCenter(digitsGridPane);
     }
 
-    public Button makeButton(int i) {
-        Button button = new Button(String.valueOf(i));
+    public Button makeButton(int i, String label) {
+        Button button = new Button(label);
         button.setPrefSize(100, 100);
         button.setFont(new Font("Arial", 24));
         button.setStyle(
@@ -70,21 +67,7 @@ public class Calculator {
         int x = 0; //row
         //digits from 1-3
         for (int i = 1; i < 4; i++) {
-            grid.add(makeButton(i), i, x);
-            //Button button = new Button(String.valueOf(i));
-            //button.setPrefSize(100, 100); // top, right, bottom, left
-            //button.setFont(new Font("Arial", 24));
-            //button.setStyle(
-            //        "-fx-border-color: grey;" + // Sets the border color
-            //                "-fx-border-width: 5px;" +   // Sets the border width
-            //                "-fx-padding: 10px;" +      // Sets padding around the text
-            //                "-fx-background-color: #f0f0f0;" // Sets the background color
-            //);
-            //double number = i;
-            //button.setOnAction(event -> {
-            //    value.set(value.getValue() * 10 + number);
-            //});
-            //grid.add(button, i, x);
+            grid.add(makeButton(i, String.valueOf(i)), i, x);
         }
         //Division button
         Button division = new Button("%");
@@ -98,28 +81,15 @@ public class Calculator {
             this.operation = 3;
             previous = value.getValue();
             value.set(0);
-
-
         });
+
         division.setPrefSize(100, 100);
         division.setFont(new Font("Arial", 24));
-        grid.add(division,4,x);
+        grid.add(division, 4, x);
         x++;
         // digits from 4 to 6
-        for (int i = 1; i < 4; i++){
-            Button button = new Button(String.valueOf(i+3));
-            button.setPrefSize(100, 100); // top, right, bottom, left
-            button.setFont(new Font("Arial", 24));
-            button.setStyle(
-                    "-fx-border-color: grey;" + // Sets the border color
-                            "-fx-border-width: 5px;" +   // Sets the border width
-                            "-fx-padding: 10px;" +      // Sets padding around the text
-                            "-fx-background-color: #f0f0f0;" // Sets the background color
-            );
-
-            double number = i + 3;
-            button.setOnAction(event -> {value.set(value.getValue() * 10 + number);});
-            grid.add(button,i,x);
+        for (int i = 1; i < 4; i++) {
+            grid.add(makeButton(i + 3, String.valueOf(i + 3)), i, x);
         }
         //Multiplication
         Button multiplication = new Button("x");
@@ -137,23 +107,11 @@ public class Calculator {
 
         });
         multiplication.setFont(new Font("Arial", 24));
-        grid.add(multiplication,4,x);
+        grid.add(multiplication, 4, x);
         x++;
         //digits from 7 to 9
-        for (int i = 1; i < 4; i++){
-            Button button = new Button(String.valueOf(i+6));
-            button.setPrefSize(100, 100); // top, right, bottom, left
-            button.setFont(new Font("Arial", 24));
-            button.setStyle(
-                    "-fx-border-color: grey;" + // Sets the border color
-                            "-fx-border-width: 5px;" +   // Sets the border width
-                            "-fx-padding: 10px;" +      // Sets padding around the text
-                            "-fx-background-color: #f0f0f0;" // Sets the background color
-            );
-
-            double number = i + 6;
-            button.setOnAction(event -> {value.set(value.getValue() * 10 + number);});
-            grid.add(button,i,x);
+        for (int i = 1; i < 4; i++) {
+            grid.add(makeButton(i + 6, String.valueOf(i + 6)), i, x);
 
         }
         //Subtraction
@@ -171,7 +129,7 @@ public class Calculator {
             previous = value.getValue();
             value.set(0);
         });
-        grid.add(subtraction,4,x);
+        grid.add(subtraction, 4, x);
         //Zero
         Button zero = new Button("0");
         zero.setStyle(
@@ -182,8 +140,10 @@ public class Calculator {
         );
         zero.setPrefSize(100, 100);
         zero.setFont(new Font("Arial", 24));
-        zero.setOnAction(event -> {value.set(value.getValue() * 10);});
-        grid.add(zero,2,x+1);
+        zero.setOnAction(event -> {
+            value.set(value.getValue() * 10);
+        });
+        grid.add(zero, 2, x + 1);
         //CLEAR
         Button clear = new Button("Clr");
         clear.setStyle(
@@ -194,8 +154,10 @@ public class Calculator {
         );
         clear.setPrefSize(100, 100);
         clear.setFont(new Font("Arial", 24));
-        clear.setOnAction(event -> {value.set(0);});
-        grid.add(clear,4,x+1);
+        clear.setOnAction(event -> {
+            value.set(0);
+        });
+        grid.add(clear, 4, x + 1);
 
 
         // Addition
@@ -213,7 +175,7 @@ public class Calculator {
             previous = value.getValue();
             value.set(0);
         });
-        grid.add(addition,3,x+1);
+        grid.add(addition, 3, x + 1);
         //RESULT
         Button result = new Button("=");
         result.setStyle(
@@ -225,18 +187,18 @@ public class Calculator {
         result.setPrefSize(100, 100);
         result.setFont(new Font("Arial", 24));
         result.setOnAction(event -> {
-            if (this.operation == 0){
+            if (this.operation == 0) {
                 value.set(value.getValue() + previous);
-            } else if (this.operation == 1){
+            } else if (this.operation == 1) {
                 value.set(previous - value.getValue());
-            } else if (this.operation == 2){
+            } else if (this.operation == 2) {
                 value.set(value.getValue() * previous);
 
-            } else if (this.operation == 3){
-                value.set(previous  / value.getValue());
+            } else if (this.operation == 3) {
+                value.set(previous / value.getValue());
             }
         });
-        grid.add(result,1,x+1);
+        grid.add(result, 1, x + 1);
 
 
     }
